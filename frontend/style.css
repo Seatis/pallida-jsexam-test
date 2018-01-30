@@ -30,12 +30,14 @@ section.navbar select.item_name {
   width: 200px;
   height: 40px;
   font-size: 16px;
+  background: tomato;
 }
 
 section.navbar select.size {
   width: 140px;
   height: 40px;
   font-size: 16px;
+  background: tomato;
 }
 
 section input {

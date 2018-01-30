@@ -14,7 +14,9 @@ function ajax (method, url, data, callback) {
   xhr.send(data);
 }
 
-function appendTable(result){
+function pageRender(result){
+  createDropDownList(result, 'name');
+  createDropDownList(result, 'size');
   var table = document.querySelector('section table');
   if (result.result === 'wrong') {
     table.innerHTML = 'Something wrong!';
@@ -41,9 +43,32 @@ function appendTable(result){
   }
 }
 
+function createDropDownList(result, type) {
+  let full = [];
+  let currentList;
+  if (type === 'name') {
+    currentList = document.querySelector('section select.item_name');
+    currentList.innerHTML = `<option value="default">Select item name</option>`;
+    result.data.forEach(function(element) {
+      full.push(element.item_name);
+    });
+  } else if (type === 'size') {
+    currentList = document.querySelector('section select.size');
+    currentList.innerHTML = `<option value="default">Select size</option>`;
+    result.data.forEach(function(element) {
+      full.push(element.size);
+    });
+  }
+  let unique = Array.from(new Set(full));
+  unique.forEach(function(element) {
+    currentList.innerHTML += `<option value="${element}">${element}</option>`;
+  });
+  
+}
+
 function start () {
   let baseUrl = 'http://localhost:4000';
-  ajax('GET', baseUrl + '/warehouse', null, appendTable);
+  ajax('GET', baseUrl + '/warehouse', null, pageRender);
 }
 
 start();
