@@ -10,7 +10,7 @@ The main page should render an HTML displaying the full list of clothes(explaine
 
 The table should be automatically rendred by the data returned from the `/warehouse` endpoint.
 
-![main](main2.png)
+![main](assets/main2.png)
 
 - the **frontend** should have
     - a heading with the title of the site
