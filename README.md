@@ -1,14 +1,12 @@
-# Pallida Orientation Exam
+# Pallida Orientation Exam - Test
 
-You will have to create a licence plate search web application. 
+Build a webshop that people can use to order some merchandise from the Greenfox store.
 
 ### Highlights
  - It has a simple frontend which can:
-     - search full or *partial* licence plate matches
-     - it can filter to a sub category of plates (like police cars only)
-     - it can start a new search by clicking on the make of the car
- - The backend validates if the licence plate is valid query
- - You have to create two endpoints
+     - list all the items
+     - user can set the quantity of any item they want to order
+     - it can display a new list with the selected items
 
 Detailed info is in the language specific description.
 
@@ -20,14 +18,17 @@ Detailed info is in the language specific description.
 
 ## What can I use?
 - You can use any resource online, but **work individually**
+- Instead of copy-pasting your answers and solutions, write them in your own words.
 
 # Tasks for everybody
 
 ## 1) Import the database
 
-All classes should import the the following database:
+All classes should import the following database:
 
-[licence_plate.sql](data/licence_plates.sql)
+| c# | java | javascript |
+|-----|-----|-----|
+|[clothing.sql](data/clothing_cs.sql)|[clothing.sql](data/clothing.sql)|[clothing_js.sql](data/clothing.sql)|
 
 CREATE A SCREENSHOT OF THE DATABASE YOU IMPORTED AND COMMIT IT TO THE REPO
 
@@ -36,5 +37,3 @@ CREATE A SCREENSHOT OF THE DATABASE YOU IMPORTED AND COMMIT IT TO THE REPO
  - [C#](cs.md)
  - [Java](java.md)
  - [JavaScript](javascript.md)
-
-*don't panic*
