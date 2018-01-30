@@ -8,13 +8,14 @@ h1 {
 
 main {
   display: grid;
+  width: 800px;
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr;
 }
 
 table {
   border-collapse: collapse;
-  width: 800px;
+  width: 100%;
 }
 
 table, td, th {    
@@ -27,14 +28,14 @@ th, td {
 }
 
 section.navbar select.item_name {
-  width: 200px;
+  width: 325px;
   height: 40px;
   font-size: 16px;
   background: tomato;
 }
 
 section.navbar select.size {
-  width: 140px;
+  width: 120px;
   height: 40px;
   font-size: 16px;
   background: tomato;
@@ -50,5 +51,23 @@ section input {
 
 section button {
   height: 38px;
-  width: 120px;
+  width: 135px;
+}
+
+div.message {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  font-size: 22px;
+  padding: 5px;
+  width: 800px;
+  margin-bottom: 5px;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: rgb(90, 192, 90);
 }

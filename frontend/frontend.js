@@ -14,6 +14,19 @@ function ajax (method, url, data, callback) {
   xhr.send(data);
 }
 
+function messageRender(result) {
+  let message = document.querySelector('div.message');
+  if (result.result === 'OK') {
+    message.innerHTML = `The items can be ordered at the total price is: ${result.total_price}`;
+    message.classList.remove('red');
+    message.classList.add('green');
+  } else {
+    message.innerHTML = result.result;
+    message.classList.remove('green');
+    message.classList.add('red');
+  }
+}
+
 function pageRender(result){
   createDropDownList(result, 'name');
   createDropDownList(result, 'size');
@@ -43,6 +56,26 @@ function pageRender(result){
   }
 }
 
+function eventHandler(baseUrl) {
+  let itemNameList = document.querySelector('section select.item_name');
+  let sizeList = document.querySelector('section select.size');
+  let quantity = document.querySelector('section.navbar input');
+  let getTotal = document.querySelector('section.navbar button');
+  getTotal.addEventListener('click', function() {
+    if (itemNameList.value === 'default') {
+      alert('Please select a name!');
+    } else if (sizeList.value === 'default') {
+      alert('Please select a size!');
+    } else if (quantity.value === '') {
+      alert('Please type the quantity');
+    } else {
+      let url = `${baseUrl}/price-check?item=${itemNameList.value}&size=${sizeList.value}&quantity=${quantity.value}`;
+      ajax('GET', url, null, messageRender);
+    }
+  });
+  
+}
+
 function createDropDownList(result, type) {
   let full = [];
   let currentList;
@@ -63,12 +96,12 @@ function createDropDownList(result, type) {
   unique.forEach(function(element) {
     currentList.innerHTML += `<option value="${element}">${element}</option>`;
   });
-  
 }
 
 function start () {
   let baseUrl = 'http://localhost:4000';
   ajax('GET', baseUrl + '/warehouse', null, pageRender);
+  eventHandler(baseUrl);
 }
 
 start();
