@@ -1,8 +1,56 @@
 body {
-  background: tomato;
   padding: 40px;
 }
 
 h1 {
   font-size: 40px;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 1fr;
+}
+
+table {
+  border-collapse: collapse;
+  width: 800px;
+}
+
+table, td, th {    
+  border: 1px solid #d1d0d0;
+  text-align: left;
+}
+
+th, td {
+  padding: 5px;
+}
+
+section.navbar select.item_name {
+  width: 200px;
+  height: 40px;
+  font-size: 16px;
+}
+
+section.navbar select.size {
+  width: 140px;
+  height: 40px;
+  font-size: 16px;
+}
+
+section.container {
+  background: greenyellow;
+}
+
+section input {
+  height: 33px;
+  width: 150px;
+  margin-left: 40px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+section button {
+  height: 38px;
+  width: 120px;
 }
