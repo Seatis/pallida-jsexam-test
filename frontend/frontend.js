@@ -17,7 +17,7 @@ function ajax (method, url, data, callback) {
 function messageRender(result) {
   let message = document.querySelector('div.message');
   if (result.result === 'OK') {
-    message.innerHTML = `The items can be ordered at the total price is: ${result.total_price}`;
+    message.innerHTML = `The items can be ordered, the total price is: ${result.total_price}`;
     message.classList.remove('red');
     message.classList.add('green');
   } else {
@@ -81,13 +81,11 @@ function createDropDownList(result, type) {
   let currentList;
   if (type === 'name') {
     currentList = document.querySelector('section select.item_name');
-    currentList.innerHTML = `<option value="default">Select item name</option>`;
     result.data.forEach(function(element) {
       full.push(element.item_name);
     });
   } else if (type === 'size') {
     currentList = document.querySelector('section select.size');
-    currentList.innerHTML = `<option value="default">Select size</option>`;
     result.data.forEach(function(element) {
       full.push(element.size);
     });
