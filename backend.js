@@ -24,10 +24,10 @@ app.get('/', function(req, res) {
 
 app.get('/warehouse', function(req, res) {
   var data = [];
-  var queryString = `SELECT * FROM warehouse`;
+  var queryString = `SELECT * FROM warehouse ORDER BY id DESC`;
   connection.query(queryString, function(err, result) {
     result.forEach(function(element){
-      data.push({'item_name': element.item_name, 'manufacturer': element.manufacturer, 'category': element.category, 'size': element.size, 'unit_price': element.unit_price});
+      data.push({'id': element.id, 'item_name': element.item_name, 'manufacturer': element.manufacturer, 'category': element.category, 'size': element.size, 'unit_price': element.unit_price});
     });
     res.send({'result': 'OK', 'data': data});
   });
@@ -44,6 +44,38 @@ app.get('/price-check', function(req, res) {
     } else {
       res.send({'result': 'please order at least 3, one for yourself, two for your friends'});
     }
+  });
+});
+
+app.post('/warehouse', function(req, res) {
+  let queryString = `INSERT INTO warehouse (item_name, manufacturer, category, size, unit_price, in_store)
+                     VALUES ('${req.body.item_name}', 'xDesign', 'sweaters', '${req.body.size}', 35.6, 19)`;
+  let queryCheck = `SELECT * FROM warehouse WHERE item_name = '${req.body.item_name}'`;
+  
+  connection.query(queryString, function(err, result) {
+    if (err) {
+      res.status(500).send({'status': 'error', 'result': err.toString()});
+      return;
+    }
+    connection.query(queryCheck, function(err, result) {
+      if (err) {
+        res.status(500).send({'status': 'error', 'result': err.toString()});
+        return;
+      }
+      res.send({'status': 'OK', 'result': result});
+    });
+  });
+});
+
+
+app.delete('/warehouse/:id', function(req, res) {
+  let queryString = `DELETE FROM warehouse WHERE id = ${req.params.id}`;
+  connection.query(queryString, function(err, result) {
+    if (err) {
+      res.status(500).send({'status': 'error', 'result': err.toString()});
+      return;
+    }
+    res.send({'status': 'Item has been removed'});
   });
 });
 

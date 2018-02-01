@@ -40,8 +40,8 @@ function pageRender(result){
                         <th>Category</th>
                         <th>Size</th>
                         <th>Unit price</th>
-                      </tr>
-    `
+                        <th>Del</th>
+                      </tr>`;
     result.data.forEach(function(element) {
       const markup = `<tr>
                         <td>${element.item_name}</td>
@@ -49,12 +49,50 @@ function pageRender(result){
                         <td>${element.category}</td>
                         <td>${element.size}</td>
                         <td>${element.unit_price}</td>
-                      </tr>
-      `
+                        <td><input type="checkbox" name="item" id=${element.id}></td>
+                      </tr>`;
       table.innerHTML += markup;
     });
   }
 }
+
+
+
+function addNewClothes(baseUrl) {
+  let name = document.querySelector('section.postbar input.nameInput');
+  let size = document.querySelector('section.postbar input.sizeInput');
+  let addButton = document.querySelector('section.postbar button');
+  addButton.addEventListener('click', function() {
+    if (name.value === '') {
+      alert('Please type name!');
+    } else if (size.value === '') {
+      alert('Please type size!');
+    } else {
+      let body = JSON.stringify({
+        "item_name": name.value,
+        "size": size.value
+      });
+      name.value = '';
+      size.value = '';
+      let url = `${baseUrl}/warehouse`;
+      ajax('POST', url, body, start);
+    }
+  });
+}
+
+function checkBoxDel(baseUrl) {
+  let delButton = document.querySelector('button.del')
+  delButton.addEventListener('click', function() {
+    let checkboxList = document.querySelectorAll('input[type=checkbox]');
+    checkboxList.forEach(function(element) {
+      if (element.checked) {
+        let url = `${baseUrl}/warehouse/${element.id}`;
+        ajax('DELETE', url, null, start);
+      }
+    });    
+  });
+}
+
 
 function eventHandler(baseUrl) {
   let itemNameList = document.querySelector('section select.item_name');
@@ -73,7 +111,8 @@ function eventHandler(baseUrl) {
       ajax('GET', url, null, messageRender);
     }
   });
-  
+  addNewClothes(baseUrl);
+  checkBoxDel(baseUrl);
 }
 
 function createDropDownList(result, type) {

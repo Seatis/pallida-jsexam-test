@@ -9,7 +9,7 @@ h1 {
 main {
   display: grid;
   width: 800px;
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: 60px 60px 1fr;
   grid-template-columns: 1fr;
 }
 
@@ -41,7 +41,7 @@ section.navbar select.size {
   background: tomato;
 }
 
-section input {
+section.navbar input,  section.postbar input {
   height: 33px;
   width: 150px;
   margin-left: 40px;
@@ -49,9 +49,15 @@ section input {
   font-size: 16px;
 }
 
+section.container table input {
+  height: 16px;
+  width: 16px;
+  
+}
+
 section button {
   height: 38px;
-  width: 135px;
+  width: 125px;
 }
 
 div.message {
