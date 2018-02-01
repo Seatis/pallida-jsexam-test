@@ -34,11 +34,15 @@ section.navbar select.item_name {
   background: tomato;
 }
 
-section.navbar select.size {
+section.navbar select.size, section.postbar select.addSize {
   width: 120px;
   height: 40px;
   font-size: 16px;
   background: tomato;
+}
+
+section.postbar select.addSize {
+  background: rgb(83, 214, 231);
 }
 
 section.navbar input,  section.postbar input {

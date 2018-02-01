@@ -1,5 +1,7 @@
 'use strict'
 
+const baseUrl = 'http://localhost:4000';
+
 function ajax (method, url, data, callback) {
   var xhr = new XMLHttpRequest();
   xhr.addEventListener("readystatechange", function () {
@@ -30,6 +32,7 @@ function messageRender(result) {
 function pageRender(result){
   createDropDownList(result, 'name');
   createDropDownList(result, 'size');
+  createDropDownList(result, 'addSize');
   var table = document.querySelector('section table');
   if (result.result === 'wrong') {
     table.innerHTML = 'Something wrong!';
@@ -58,15 +61,15 @@ function pageRender(result){
 
 
 
-function addNewClothes(baseUrl) {
+function addEvent() {
   let name = document.querySelector('section.postbar input.nameInput');
-  let size = document.querySelector('section.postbar input.sizeInput');
+  let size = document.querySelector('section.postbar select.addSize');
   let addButton = document.querySelector('section.postbar button');
   addButton.addEventListener('click', function() {
     if (name.value === '') {
       alert('Please type name!');
-    } else if (size.value === '') {
-      alert('Please type size!');
+    } else if (size.value === 'default') {
+      alert('Please select size!');
     } else {
       let body = JSON.stringify({
         "item_name": name.value,
@@ -75,26 +78,26 @@ function addNewClothes(baseUrl) {
       name.value = '';
       size.value = '';
       let url = `${baseUrl}/warehouse`;
-      ajax('POST', url, body, start);
+      ajax('POST', url, body, newLoad);
     }
   });
 }
 
-function checkBoxDel(baseUrl) {
+function deleteEvent() {
   let delButton = document.querySelector('button.del')
   delButton.addEventListener('click', function() {
     let checkboxList = document.querySelectorAll('input[type=checkbox]');
     checkboxList.forEach(function(element) {
       if (element.checked) {
         let url = `${baseUrl}/warehouse/${element.id}`;
-        ajax('DELETE', url, null, start);
+        ajax('DELETE', url, null, newLoad);
       }
     });    
   });
 }
 
 
-function eventHandler(baseUrl) {
+function getTotalEvent() {
   let itemNameList = document.querySelector('section select.item_name');
   let sizeList = document.querySelector('section select.size');
   let quantity = document.querySelector('section.navbar input');
@@ -111,20 +114,26 @@ function eventHandler(baseUrl) {
       ajax('GET', url, null, messageRender);
     }
   });
-  addNewClothes(baseUrl);
-  checkBoxDel(baseUrl);
 }
 
 function createDropDownList(result, type) {
   let full = [];
   let currentList;
   if (type === 'name') {
-    currentList = document.querySelector('section select.item_name');
+    currentList = document.querySelector('section.navbar select.item_name');
+    currentList.innerHTML = `<option value="default">Select item name</option>`;
     result.data.forEach(function(element) {
       full.push(element.item_name);
     });
   } else if (type === 'size') {
-    currentList = document.querySelector('section select.size');
+    currentList = document.querySelector('section.navbar select.size');
+    currentList.innerHTML = `<option value="default">Select size</option>`;
+    result.data.forEach(function(element) {
+      full.push(element.size);
+    });
+  } else if (type === 'addSize') {
+    currentList = document.querySelector('section.postbar select.addSize');
+    currentList.innerHTML = `<option value="default">Select size</option>`;
     result.data.forEach(function(element) {
       full.push(element.size);
     });
@@ -135,10 +144,19 @@ function createDropDownList(result, type) {
   });
 }
 
+function eventController(result) {
+  pageRender(result);
+  getTotalEvent();
+  deleteEvent();
+}
+
+function newLoad() {
+  ajax('GET', baseUrl + '/warehouse', null, eventController);
+}
+
 function start () {
-  let baseUrl = 'http://localhost:4000';
-  ajax('GET', baseUrl + '/warehouse', null, pageRender);
-  eventHandler(baseUrl);
+  newLoad();
+  addEvent();
 }
 
 start();
