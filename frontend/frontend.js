@@ -97,8 +97,19 @@ function deleteEvent() {
 }
 
 
+function afterNameSelected(result) {
+  let sizeList = document.querySelector('section select.size');
+  sizeList.innerHTML = `<option value="default">Select size</option>`;
+  result.data.forEach(function(element) {
+    sizeList.innerHTML += `<option value="${element}">${element}</option>`;
+  });
+}
+
 function getTotalEvent() {
   let itemNameList = document.querySelector('section select.item_name');
+  itemNameList.addEventListener('change', function() {
+    ajax('GET', `${baseUrl}/size-filter?item_name=${this.value}`, null, afterNameSelected);
+  });
   let sizeList = document.querySelector('section select.size');
   let quantity = document.querySelector('section.navbar input');
   let getTotal = document.querySelector('section.navbar button');

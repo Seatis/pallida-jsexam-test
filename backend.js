@@ -33,6 +33,17 @@ app.get('/warehouse', function(req, res) {
   });
 });
 
+app.get('/size-filter', function(req, res) {
+  var data = [];
+  var queryString = `SELECT size FROM warehouse WHERE item_name = '${req.query.item_name}'`;
+  connection.query(queryString, function(err, result) {
+    result.forEach(function(element){
+      data.push(element.size);
+    });
+    res.send({'result': 'OK', 'data': data});
+  });
+});
+
 app.get('/price-check', function(req, res) {
   var data = [];
   var queryString = `SELECT in_store, unit_price FROM warehouse WHERE item_name = '${req.query.item}' AND size = '${req.query.size}'`;
